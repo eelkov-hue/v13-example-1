@@ -1,7 +1,14 @@
 import heroForest from "@/assets/hero-forest.jpg";
 import { Leaf, TreePine, Waves, Bird, ChevronDown } from "lucide-react";
+import { useSiteContent } from "@/hooks/useSiteContent";
 
 const Index = () => {
+  const { content, loading } = useSiteContent();
+
+  const h1Line1 = content?.h1_line1 ?? "Ontdek de kracht";
+  const h1Line2 = content?.h1_line2 ?? "van de natuur";
+  const heroImageUrl = content?.hero_image_url ?? heroForest;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -23,8 +30,8 @@ const Index = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroForest})` }}
+          className="absolute inset-0 bg-cover bg-center transition-all duration-700"
+          style={{ backgroundImage: `url(${heroImageUrl})` }}
         />
         {/* Overlay */}
         <div
@@ -34,34 +41,36 @@ const Index = () => {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <div
-            className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-cream/25 bg-cream/10 backdrop-blur-sm opacity-0 animate-fade-in delay-200"
-          >
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-cream/25 bg-cream/10 backdrop-blur-sm opacity-0 animate-fade-in delay-200">
             <TreePine size={14} className="text-gold" />
             <span className="font-body text-xs text-cream/90 uppercase tracking-widest">
               Natuur. Verbinding. Rust.
             </span>
           </div>
 
-          <h1
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-cream leading-tight mb-6 opacity-0 animate-fade-up delay-400 text-balance"
-          >
-            Ontdek de kracht
-            <br />
-            <span className="italic text-gold-light">van de natuur</span>
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-cream leading-tight mb-6 opacity-0 animate-fade-up delay-400 text-balance">
+            {loading ? (
+              <>
+                Ontdek de kracht
+                <br />
+                <span className="italic text-gold-light">van de natuur</span>
+              </>
+            ) : (
+              <>
+                {h1Line1}
+                <br />
+                <span className="italic text-gold-light">{h1Line2}</span>
+              </>
+            )}
           </h1>
 
-          <p
-            className="font-body text-lg md:text-xl text-cream/80 max-w-xl mx-auto mb-12 leading-relaxed opacity-0 animate-fade-up delay-600"
-          >
+          <p className="font-body text-lg md:text-xl text-cream/80 max-w-xl mx-auto mb-12 leading-relaxed opacity-0 animate-fade-up delay-600">
             Word lid van onze groene gemeenschap en geniet van adembenemende
             bossen, rust en verbinding met de natuur.
           </p>
 
           {/* CTA Buttons */}
-          <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-up delay-800"
-          >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-up delay-800">
             <button className="group relative px-10 py-4 rounded-full font-body font-semibold text-base tracking-wide transition-all duration-300 overflow-hidden bg-gold text-foreground hover:shadow-[0_8px_30px_hsla(38,75%,52%,0.5)] hover:-translate-y-0.5 active:translate-y-0">
               <span className="relative z-10 flex items-center gap-2">
                 <Leaf size={16} />
@@ -135,10 +144,7 @@ const Index = () => {
       </section>
 
       {/* CTA Banner */}
-      <section
-        className="py-24 px-6"
-        style={{ background: "var(--gradient-primary)" }}
-      >
+      <section className="py-24 px-6" style={{ background: "var(--gradient-primary)" }}>
         <div className="max-w-3xl mx-auto text-center">
           <Leaf size={36} className="text-gold mx-auto mb-6" />
           <h2 className="font-display text-4xl md:text-5xl font-bold text-cream mb-5">
